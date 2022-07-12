@@ -15,21 +15,16 @@ export class TrainingRecord implements SingleTraining {
     weights: string;
 
     constructor(obj: NewSingleTraining) {
+
         if (!obj.title || obj.title.length > 40) {
             throw new ValidationError('Nazwa treningu nie może być pusta, ani przekraczać 40 znaków');
         }
         if (obj.date.length > 10) {
-            throw new ValidationError('Nieprawidłowa data, zapisz datę w postaci "RRRR-MM-DD" lub wybierz z podpowiedzi')
+            throw new ValidationError('Nieprawidłowa data, zapisz datę w postaci "RRRR-MM-DD" lub wybierz z podpowiedzi');
         }
-        // if (obj.exerciseName.length > 40) {
-        //     throw new ValidationError('Nazwa ćwiczenia nie może być pusta, ani przekraczać 40 znaków');
-        // }
-        // if (!obj.reps || obj.reps.length > 30) {
-        //     throw new ValidationError('Zapis wykonanych powtórzeń nie może być pusty ani przekraczać 30 znaków');
-        // }
-        // if (!obj.weights || obj.weights.length > 40) {
-        //     throw new ValidationError('Zapis użytych ciężarów nie może być pusty ani przekraczać 30 znaków');
-        // }
+        if (!obj.date) {
+            throw new ValidationError('Podaj datę treiningu');
+        }
 
         this.id = obj.id;
         this.title = obj.title;
@@ -52,7 +47,7 @@ export class TrainingRecord implements SingleTraining {
         return results.map(result => new TrainingRecord(result));
     }
 
-    async insert() {
+    async insert(): Promise<string> {
         if (!this.id) {
             this.id = uuid();
         } else {
@@ -67,13 +62,16 @@ export class TrainingRecord implements SingleTraining {
             reps: this.reps,
             weights: this.weights,
         })
+
+        return this.id;
     }
 
-    async delete() {
+    async delete(): Promise<void> {
         await pool.execute("DELETE FROM `trainings` WHERE `id`=:id", {
             id: this.id,
         })
     }
+
     async update(): Promise<void> {
         await pool.execute("UPDATE `trainings` SET `title`=:title, `date`=:date, `exerciseName`=:exerciseName, `reps`=:reps, `weights`=:weights WHERE `id` = :id", {
             id: this.id,
