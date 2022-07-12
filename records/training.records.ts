@@ -69,4 +69,20 @@ export class TrainingRecord implements SingleTraining {
         })
     }
 
+    async delete() {
+        await pool.execute("DELETE FROM `trainings` WHERE `id`=:id", {
+            id: this.id,
+        })
+    }
+    async update(): Promise<void> {
+        await pool.execute("UPDATE `trainings` SET `title`=:title, `date`=:date, `exerciseName`=:exerciseName, `reps`=:reps, `weights`=:weights WHERE `id` = :id", {
+            id: this.id,
+            title: this.title,
+            date: this.date,
+            exerciseName: this.exerciseName,
+            reps: this.reps,
+            weights: this.weights,
+        });
+    }
+
 }

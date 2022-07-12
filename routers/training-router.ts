@@ -15,3 +15,33 @@ trainingRouter
 
         await newTraining.insert();
     })
+    .get('/:date/:title', async (req, res) => {
+        const training = await TrainingRecord.getOneTraining(req.params.date, req.params.title);
+
+        res.json(training);
+    })
+    .delete('/:date/:title', async (req, res) => {
+
+        const trainingsToRemove = await TrainingRecord.getOneTraining(req.params.date, req.params.title);
+
+        Promise.all(
+            trainingsToRemove.map(async training => {
+                await training.delete()
+            })
+        )
+
+        res.json({
+            isSuccess: true,
+        })
+    })
+    .put('/:date/:title', async (req, res) => {
+        console.log(req.body);
+
+        const exerciseToUpdate = new TrainingRecord(req.body);
+        await exerciseToUpdate.update()
+
+
+        res.json({
+            isSuccess: true,
+        })
+    });
