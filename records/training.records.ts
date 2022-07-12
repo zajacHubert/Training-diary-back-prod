@@ -15,21 +15,21 @@ export class TrainingRecord implements SingleTraining {
     weights: string;
 
     constructor(obj: NewSingleTraining) {
-        if (!obj.title || obj.exerciseName.length > 40) {
+        if (!obj.title || obj.title.length > 40) {
             throw new ValidationError('Nazwa treningu nie może być pusta, ani przekraczać 40 znaków');
         }
         if (obj.date.length > 10) {
             throw new ValidationError('Nieprawidłowa data, zapisz datę w postaci "RRRR-MM-DD" lub wybierz z podpowiedzi')
         }
-        if (!obj.exerciseName || obj.exerciseName.length > 40) {
-            throw new ValidationError('Nazwa ćwiczenia nie może być pusta, ani przekraczać 40 znaków');
-        }
-        if (!obj.reps || obj.reps.length > 30) {
-            throw new ValidationError('Zapis wykonanych powtórzeń nie może być pusty ani przekraczać 30 znaków');
-        }
-        if (!obj.weights || obj.weights.length > 40) {
-            throw new ValidationError('Zapis użytych ciężarów nie może być pusty ani przekraczać 30 znaków');
-        }
+        // if (obj.exerciseName.length > 40) {
+        //     throw new ValidationError('Nazwa ćwiczenia nie może być pusta, ani przekraczać 40 znaków');
+        // }
+        // if (!obj.reps || obj.reps.length > 30) {
+        //     throw new ValidationError('Zapis wykonanych powtórzeń nie może być pusty ani przekraczać 30 znaków');
+        // }
+        // if (!obj.weights || obj.weights.length > 40) {
+        //     throw new ValidationError('Zapis użytych ciężarów nie może być pusty ani przekraczać 30 znaków');
+        // }
 
         this.id = obj.id;
         this.title = obj.title;
