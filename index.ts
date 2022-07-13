@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express, { json, Router } from "express";
 import cors from 'cors';
 import 'express-async-errors';
 import { handleError } from "./utils/handleError";
@@ -11,7 +11,12 @@ app.use(cors({
 }));
 app.use(json());
 
-app.use('/training', trainingRouter);
+const router = Router();
+router.use
+
+router.use('/training', trainingRouter);
+
+app.use('/api', router);
 
 app.use(handleError);
 
