@@ -36,8 +36,6 @@ trainingRouter
         });
     })
     .put('/:date/:title', async (req, res) => {
-        console.log(req.body);
-
         const exerciseToUpdate = new TrainingRecord(req.body);
         await exerciseToUpdate.update();
 
