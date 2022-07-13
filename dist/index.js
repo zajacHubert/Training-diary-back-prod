@@ -29,11 +29,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 const cors_1 = __importDefault(require("cors"));
 require("express-async-errors");
+const handleError_1 = require("./utils/handleError");
+const training_router_1 = require("./routers/training-router");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     origin: 'http://localhost:3000',
 }));
 app.use((0, express_1.json)());
+app.use('/training', training_router_1.trainingRouter);
+app.use(handleError_1.handleError);
 app.listen(3001, '0.0.0.0', () => {
     console.log('server is listening on port http://localhost:3001');
 });
