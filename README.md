@@ -1,0 +1,1 @@
+Backend created using the node's framework - Express JS. Includes operations create, add, delete and update records stored in a sql database. Contains common React types with the frontend. If I wanted to expand the application, I would focus on adding user login options and better data validation.
